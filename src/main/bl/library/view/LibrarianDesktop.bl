@@ -1,0 +1,10 @@
+import org.zenframework.z8.base.form.Desktop;
+
+
+[entry]
+[displayName "Управление библиотекой"]
+public class LibrarianDesktop extends Desktop {
+    public LendAndReturn lend;
+
+    public LibraryJournalOutdated outdaters;
+}

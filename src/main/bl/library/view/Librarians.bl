@@ -1,0 +1,48 @@
+import org.zenframework.z8.base.form.action.Action;
+import org.zenframework.z8.base.form.action.ActionType;
+import org.zenframework.z8.base.table.system.UserRoles;
+import library.model.LibraryUser;
+import library.model.LibraryRoles;
+import library.runtime.Setup;
+import org.zenframework.z8.lang.Object;
+
+[displayName "Библиотекари"]
+class Librarians extends LibraryUser {
+    [displayName "Сбросить пароль"]
+	Action resetPassword;
+	resetPassword.type = ActionType.Primary;
+
+    [displayName "Библиотека"] library.name;
+
+    virtual protected sql_bool where() {
+        UserRoles roles;
+		return roles.hasRecord(roles.role == LibraryRoles.Librarian && recordId == roles.user );
+	}
+	
+	controls = { name,
+				 changePassword,
+				 resetPassword,
+				 
+				 lastName,
+				 firstName,
+				 middleName,
+                 library.name    
+                };
+				 
+	sortFields = { name };
+	names = { name, lastName };
+	quickFilters = { name, lastName };
+
+    virtual protected void afterCreate(guid recordId) {
+		super.afterCreate(recordId);
+
+        if(hasRecord(recordId))
+            throw "Записи не существует";
+
+        Setup setup;
+        LibrarianDesktop librarianDesktop;
+        
+        setup.addRoles(guid[]{ LibraryRoles.Librarian }, recordId);
+        setup.addEntries( int[Object]{(librarianDesktop, 1)}, recordId);
+	}
+}

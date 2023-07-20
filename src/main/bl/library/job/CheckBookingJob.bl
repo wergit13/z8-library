@@ -1,0 +1,21 @@
+import org.zenframework.z8.base.Executable;
+import org.zenframework.z8.base.application.Application;
+import org.zenframework.z8.base.form.action.Parameter;
+import org.zenframework.z8.base.table.value.Field;
+import library.model.Journal;
+
+[job "0 8 * * *"]
+[displayName "Проверить брони"]
+public class CheckBookingJob extends Executable {
+
+	virtual protected void execute(Parameter[] parameters) {
+		/*Journal journal;
+		journal.read(Field[] { journal.bookInstance.book.name }, journal.status == Journal.Booked
+				&& journal.bookedAt < date.now().addMinute(-1));
+		while (journal.next()) {
+			journal.destroy(journal.recordId());
+			Application.logInfo("Бронь на книгу " + journal.bookInstance.name.get() + " аннулирована");
+		}*/
+	}
+
+}

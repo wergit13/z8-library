@@ -1,0 +1,38 @@
+import org.zenframework.z8.base.table.Table;
+import org.zenframework.z8.base.table.value.DateField;
+import org.zenframework.z8.lang.date;
+
+[generatable]
+[name "Author"]
+[displayName "Авторы"]
+public class Author extends Table {
+
+	[name "BornDate"]
+	public DateField bornDate;
+
+	[name "DeathDate"]
+	public DateField deathDate;
+
+	records {
+		[name "Толстой Лев Николаевич"]
+		[bornDate date.parse("12.12.1827", "d.m.Y")]
+		[deathDate date.parse("12.12.1827", "d.m.Y")]
+		Tolstoy = 'AE2F5BDA-2542-4122-880E-4E8DC6349739';
+		
+		[name "Тургенев Иван Сергеевич"]
+		[bornDate date.parse("12.12.1827", "d.m.Y")]
+		[deathDate date.parse("12.12.1827", "d.m.Y")]
+		Turgenev = 'D09F6700-3396-424F-8B41-89B37F8CF095';
+		
+		[name "Лондон Джек"]
+		[bornDate date.parse("12.12.1827", "d.m.Y")]
+		[deathDate date.parse("12.12.1827", "d.m.Y")]
+		London = '74F9C921-3303-4DE4-84E2-75236779C9F1';
+		
+		[name "Достоевский Фёдор Михайлович"]
+		[bornDate date.parse("12.12.1827", "d.m.Y")]
+		[deathDate date.parse("12.12.1827", "d.m.Y")]
+		Dostoevsky = '7A7B728A-B462-4CA7-B4DB-191252CFB828';
+	}
+
+}

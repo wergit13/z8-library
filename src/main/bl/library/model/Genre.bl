@@ -1,0 +1,19 @@
+import org.zenframework.z8.base.table.Table;
+
+[generatable]
+[name "Genre"]
+[displayName "Жанр"]
+public class Genre extends Table {
+
+	records {
+		[name "Детектив"]
+		Detective = '260F47DB-398B-4C5F-9A8A-4977948A7C1C';
+
+		[name "Триллер"]
+		Triller = '1DD618F4-13CA-4A97-A43B-C1EE5D39CF22';
+
+		[name "Приключения"]
+		Adventure = '086BC1f6-47EC-4964-9D47-1142EAB7EfC6';
+	}
+
+}

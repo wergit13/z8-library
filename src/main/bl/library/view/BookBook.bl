@@ -1,0 +1,45 @@
+import library.model.Author;
+import library.model.Book;
+import org.zenframework.z8.base.form.Listbox;
+import org.zenframework.z8.base.form.action.Action;
+import org.zenframework.z8.base.query.Query;
+
+
+[displayName "Забронировать книгу"]
+public class BookBook extends Author {
+    
+    [displayName "Имя автора"] name;
+
+    public Book book;
+
+    private Listbox booksList;
+    booksList.query = book;
+    booksList.link = book.authorId;
+    booksList.columns = { book.name };
+    booksList.dependencies = { librariesList };
+    booksList.flex = 1;
+    
+    FreeBookInstances freeBooks;
+
+    private Listbox librariesList;
+    librariesList.query = freeBooks;
+    librariesList.dependency = freeBooks.book.recordId;
+    librariesList.columns = { freeBooks.library.name, freeBooks.number };
+    librariesList.flex = 1;
+    librariesList.actions = { bookBook };
+
+    colCount = 3;
+
+    [displayName "Забронировать"]
+	public Action bookBook = class {
+		virtual protected void execute(guid recordId, Query context, guid[] selected, Query query) {
+            for (guid instanceId : selected){
+                container.freeBooks.bookBook( instanceId );
+            }
+		}
+	};
+
+    names = { name };
+    controls = { booksList, librariesList };
+
+}

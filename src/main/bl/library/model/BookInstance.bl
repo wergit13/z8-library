@@ -1,0 +1,22 @@
+import org.zenframework.z8.base.table.Table;
+import org.zenframework.z8.base.table.value.Link;
+import org.zenframework.z8.base.table.value.StringExpression;
+import org.zenframework.z8.base.table.value.IntField;
+
+[generatable]
+[name "BookInstance"]
+public class BookInstance extends Table {
+
+	public Book book;
+	[name "Author"] public Link bookId = book;
+
+    [name "Number"]
+    public IntField number;
+
+    public Library library;
+    [name "Library"]
+    public Link libraryId = library;
+
+    public StringExpression fullName = book.name + " №";
+
+}

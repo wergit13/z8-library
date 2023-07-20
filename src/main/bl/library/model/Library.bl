@@ -1,0 +1,36 @@
+import org.zenframework.z8.base.table.Table;
+import org.zenframework.z8.base.table.value.StringField;
+
+[generatable]
+[name "Library"]
+public class Library extends Table {
+
+	[displayName "Наименование"] name;
+	name.length = 100;
+
+	[name "Address"]
+	[displayName "Адрес"]
+	public StringField address;
+	address.length = 100;
+
+	[name "Phone"]
+	[displayName "Телефон"]
+	public StringField phone;
+	phone.length = 30;
+
+	records {
+		[name "Центральная библиотека им. Н.А. Некрасова"]
+		Necrasov = '5709D453-2682-11EE-9B4B-0800200C9A66';
+		
+		[name "Центральная городская детская библиотека им. А.П. Гайдара"]
+		Gaidar = '5709D452-2682-11EE-9B4B-0800200C9A66';
+		
+		[name "Библиотека искусств им. А.П. Боголюбова"]
+		Bogolub = '5709D451-2682-11EE-9B4B-0800200C9A66';
+		
+		[name "Библиотека–читальня им. А.С. Пушкина"]
+		Pushkina = '5709D450-2682-11EE-9B4B-0800200C9A66';
+	}
+
+}
+

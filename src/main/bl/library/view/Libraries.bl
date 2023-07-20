@@ -1,0 +1,13 @@
+import library.model.Library;
+
+[displayName "Библиотеки"]
+public class Libraries extends Library {
+
+	[displayName "Название"] name;
+	[displayName "Адрес"] address;
+	[displayName "Телефон"] phone;
+	names = { name };
+	controls = { name, address, phone };
+	columns = { name, address, phone };
+
+}

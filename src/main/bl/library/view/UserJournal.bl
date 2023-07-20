@@ -1,0 +1,14 @@
+import library.model.Journal;
+
+[entry]
+[displayName "Книги на руках и бронирования"]
+[presentation "table"]
+public class UserJournal extends Journal
+{
+    virtual protected sql_bool where() {
+		return personId == user().id && status != Journal.Returned;
+	}
+    sortFields = { lendedAt };
+
+    columns = { bookInstance.book.fullName, statusStr, bookedAt, lendedAt, alertAt };
+}

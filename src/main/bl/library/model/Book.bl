@@ -1,0 +1,26 @@
+import org.zenframework.z8.base.table.Table;
+import org.zenframework.z8.base.table.value.Link;
+import org.zenframework.z8.base.table.value.StringExpression;
+import org.zenframework.z8.base.table.value.IntField;
+import org.zenframework.z8.base.table.value.StringField;
+
+[generatable]
+[name "Book"]
+[displayName "Книги"]
+public class Book extends Table {
+
+	public Genre genre;
+	[name "Genre"] public Link genreId = genre;
+
+	public Author author;
+	[name "Author"] public Link authorId = author;
+
+	[name "YearOfPublish"]
+	public IntField yearOfPublish;
+
+	[name "ISBN"]
+	public StringField isbn;
+
+	public StringExpression fullName = "«" + name + "» (" + author.name + ")";
+
+}

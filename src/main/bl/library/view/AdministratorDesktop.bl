@@ -1,0 +1,15 @@
+import org.zenframework.z8.base.form.Desktop;
+
+
+[entry]
+[displayName "Управление библиотеками"]
+public class AdministratorDesktop extends Desktop {
+
+	public Books books;
+	
+	public Libraries libraries;
+
+	public Persons persons;
+
+    public Librarians librarians;
+}

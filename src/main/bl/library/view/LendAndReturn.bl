@@ -1,0 +1,55 @@
+import library.model.Journal;
+import org.zenframework.z8.base.form.action.Action;
+import org.zenframework.z8.base.form.Listbox;
+import org.zenframework.z8.base.query.Query;
+import org.zenframework.z8.base.form.action.ActionType;
+
+public class LendAndReturn extends Persons
+{
+	[displayName "Описание"] description;
+
+	description.colSpan = 4;
+	description.flex = 1;
+
+	public LibraryJournal journal;
+
+
+
+	[displayName "Выдать книгу"]
+	public Action lendBook = class {
+		type = ActionType.Primary;
+		virtual protected void execute(guid recordId, Query context, guid[] selected, Query query) {
+			for (guid journalId : selected)
+				container.journal.lendBook(journalId);
+		}
+	};
+
+	[displayName "Вернуть книгу"]
+	public Action returnBook = class {
+		type = ActionType.Success;
+		virtual protected void execute(guid recordId, Query context, guid[] selected, Query query) {
+			for (guid journalId : selected)
+				container.journal.returnBook(journalId);
+		}
+	};
+
+	[displayName "История"]
+	public Listbox journalList;
+	journalList.query = journal;
+	journalList.link = journal.personId;
+	journalList.columns = { journal.bookInstance.book.fullName, journal.bookedAt, journal.lendedAt, journal.returnedAt, journal.alertAt, journal.statusStr };
+	journalList.actions = { lendBook, returnBook };
+
+
+	journalList.colSpan = 4;
+	journalList.flex = 3;
+
+	colCount = 4;
+
+    names = { firstName, middleName, lastName };
+	controls = { name,  journalList };
+	columns = { name };
+
+
+
+}

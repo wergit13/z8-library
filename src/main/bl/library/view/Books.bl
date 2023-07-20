@@ -1,0 +1,20 @@
+
+import library.model.Book;
+
+[displayName "Книги"]
+public class Books extends Book {
+
+    [displayName "Наименование"] name;
+	[displayName "Описание"] description;
+	[displayName "Автор"] author.name;
+    [displayName "Год публикации"] yearOfPublish;
+    [displayName "Номер издания"] isbn;
+    [displayName "Жанр"] genre.name;
+    description.colSpan = 4;
+	description.flex = 1;
+
+    names = { fullName };
+	controls = { name, genre.name, author.name, description };
+	columns = { name, genre.name, author.name};
+
+}

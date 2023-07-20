@@ -1,0 +1,77 @@
+import org.zenframework.z8.base.table.RecordLock;
+import org.zenframework.z8.base.table.Table;
+import org.zenframework.z8.base.table.value.DateExpression;
+import org.zenframework.z8.base.table.value.DatetimeField;
+import org.zenframework.z8.base.table.value.Field;
+import org.zenframework.z8.base.table.value.IntExpression;
+import org.zenframework.z8.base.table.value.Link;
+import org.zenframework.z8.base.table.value.StringExpression;
+
+[generatable]
+[name "Journal"]
+public class Journal extends Table {
+
+	public static final int Returned = 0;
+	public static final int Booked = 1;
+	public static final int Lended = 2;
+
+	public BookInstance bookInstance;
+	[name "Book"] public Link bookInstanceId = bookInstance;
+
+	public LibraryUser person;
+	[name "Person"] public Link personId = person;
+
+	[name "Booked"]
+	[displayName "Забронирована"]
+	public DatetimeField bookedAt;
+	bookedAt.defaultValue = date.now();
+
+	[name "Date"]
+	[displayName "Взята"]
+	public DatetimeField lendedAt;
+
+	[name "Returned"]
+	[displayName "Вернул"]
+	public DatetimeField returnedAt;
+
+	[displayName "Вернуть"]
+	public DateExpression alertAt = ((sql_date) lendedAt == date.Min).IIF(date.Min, ((sql_date) lendedAt).addDay(14));
+
+	public IntExpression status = (bookedAt == date.Min || returnedAt != date.Min).IIF(
+			Returned, (lendedAt == date.Min).IIF(Booked, Lended));
+
+	[displayName "Статус"]
+	public StringExpression statusStr = (status == Returned).IIF("Возвращена", (status == Booked).IIF("Забронирована", "На руках"));
+
+	public void lendBook(guid recordId) {
+		if (!readRecord(recordId, Field[] { this.bookInstanceId, this.status }))
+			throw "Запись '" + recordId + "' не существует";
+
+		if (this.status.get() != Booked)
+			throw "Неверный статус";
+
+		guid bookInstanceId = this.bookInstanceId.get();
+
+		if (readFirst(Field[] { bookInstance.number, person.name, status }, this.bookInstanceId == bookInstanceId && this.status != Returned && this.recordId != recordId))
+			throw "Экземляр номер "
+					+ (status.get() == Booked ? " забронирована читателем " : " находится на руках у читателя ")
+					+ person.name.get();
+
+		this.status = Lended;
+		this.lendedAt = date.now();
+		this.lock = RecordLock.Full;
+		update(recordId);
+	}
+
+	public void returnBook(guid recordId) {
+		if (!readRecord(recordId, Field[] { this.status }))
+			throw "Запись '" + recordId + "' не существует";
+
+		if (this.status.get() != Lended)
+			throw "Неверный статус";
+
+		this.returnedAt = date.now();
+		update(recordId);
+	}
+
+}

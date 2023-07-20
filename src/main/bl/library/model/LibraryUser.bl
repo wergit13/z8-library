@@ -1,0 +1,19 @@
+import org.zenframework.z8.base.table.value.StringExpression;
+import org.zenframework.z8.base.table.value.StringField;
+import org.zenframework.z8.base.table.system.Users;
+import org.zenframework.z8.base.table.value.Link;
+
+[generatable]
+public class LibraryUser extends Users {
+
+    public Library library;
+    [name "Library"] public Link libraryId = library;
+
+    
+	[name "Address"]
+	public StringField address;
+	address.length = 100;
+
+	public StringExpression namePhone = name + " (" + phone + ")";
+
+}

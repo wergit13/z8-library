@@ -1,0 +1,22 @@
+import library.model.BookInstance;
+import library.model.Journal;
+import org.zenframework.z8.base.table.value.Field;
+
+[entry]
+public class BookInstances extends BookInstance
+{
+    [displayName "Книга"] book.name;
+	[displayName "Номер"] number;
+	[displayName "Библиотека"] library.name;
+    names = { fullName };
+    controls = { book.name, library.name, number };
+    columns = { book.name, library.name, number };
+
+    virtual protected void onDestroyAction(guid recordId) {
+		super.onDestroyAction(recordId);
+
+		Journal journal;
+		if (journal.readFirst(Field[] { journal.bookInstance.book.fullName }, journal.bookInstanceId == recordId))
+			throw "Невозможно удалить книгу " + journal.bookInstance.book.fullName.get() + ": журнал не пустой";
+	}
+}

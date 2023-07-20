@@ -1,0 +1,15 @@
+import library.model.Journal;
+import library.model.LibraryUser;
+import org.zenframework.z8.base.table.value.Field;
+
+public class LibraryJournal extends Journal
+{
+    virtual protected sql_bool where()
+    {
+        LibraryUser user;
+        user.readRecord(user().id, Field[] { user.libraryId});
+        if(user.libraryId.sqlIsNull())
+            throw "Запрос только для библиотекаря";
+        return bookInstance.libraryId == user.libraryId;
+    }
+}

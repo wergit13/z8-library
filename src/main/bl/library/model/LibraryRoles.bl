@@ -1,0 +1,15 @@
+import org.zenframework.z8.base.table.system.Roles;
+
+
+[generatable]
+public class LibraryRoles extends Roles {
+    records {
+		[name "Библиотекари"]
+		[description "Библиотекари"]
+		Librarian = '421A8413-A5EC-4DAB-9235-8A5FF83341C5';
+
+		[name "Читатели"]
+		[description "Читатели"]
+		Person = 'BE42CEB5-02DF-43EE-885F-B82DDEDCAA08';
+	}
+}

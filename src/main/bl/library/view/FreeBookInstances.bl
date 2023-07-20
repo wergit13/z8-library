@@ -1,0 +1,51 @@
+import library.model.Journal;
+import library.model.BookInstance;
+import library.model.LibraryRoles;
+import org.zenframework.z8.base.table.value.Field;
+import org.zenframework.z8.base.table.value.JoinType;
+import org.zenframework.z8.base.table.value.Join;
+import org.zenframework.z8.base.table.system.UserRoles;
+
+[entry]
+[displayName "Свободные книги"]
+public class FreeBookInstances extends BookInstance
+{
+    public Journal journal;
+    public Join freeJoin = class {
+        joinType = JoinType.Left;
+        virtual protected sql_bool expression(){
+            return container.recordId == (sql_guid) container.journal.bookInstanceId && container.journal.status != Journal.Returned; 
+        }
+    };
+    freeJoin = journal;
+
+    virtual protected sql_bool where() {
+		return journal.recordId.sqlIsNull();
+	}
+
+    [displayName "№"] number;
+
+    [displayName "Библиотека"] library.name;
+    [displayName "Книга"] book.name;
+
+    columns = { library.name, book.name, number};
+
+    public void bookBook( guid recordId ){
+        guid userId  = user().id;
+        UserRoles roles;
+        if(!roles.hasRecord(roles.user == userId && roles.role == LibraryRoles.Person))
+            throw "Только читатель может бронировать книги";
+
+        if (!readRecord(recordId, Field[]{ this.bookId }))
+			throw "Запись не существует";
+
+        Journal allJournal;
+        if( allJournal.hasRecord(userId == allJournal.personId && this.bookId.get() == allJournal.bookInstance.bookId && allJournal.status != Journal.Returned))
+            throw "Нельзя бронировать или брать одинаковые книги"; 
+
+        Journal newRecord;
+        newRecord.personId = userId;
+        newRecord.bookInstanceId = this.recordId.get();
+        newRecord.create();
+    }
+}

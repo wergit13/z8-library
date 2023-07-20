@@ -1,0 +1,5 @@
+rootProject.name = 'library'
+
+if (properties.containsKey('z8Home'))
+	includeBuild(z8Home)
+
