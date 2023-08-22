@@ -1,15 +1,25 @@
 import library.model.Journal;
 import library.model.LibraryUser;
+import library.model.LibraryRoles;
 import org.zenframework.z8.base.table.value.Field;
+import org.zenframework.z8.base.table.system.UserRoles;
+import library.model.BookInstance;
+import org.zenframework.z8.base.table.value.JoinType;
+import org.zenframework.z8.base.table.value.Join;
+import org.zenframework.z8.base.application.Application;
 
+[displayName "Журнал библиотеки"]
 public class LibraryJournal extends Journal
 {
     virtual protected sql_bool where()
     {
+        guid userId  = user().id;
+        UserRoles roles;
+        if(!roles.hasRecord(roles.user == userId && roles.role == LibraryRoles.Librarian))
+            throw "Зарос только для библиотекаря";
         LibraryUser user;
-        user.readRecord(user().id, Field[] { user.libraryId});
-        if(user.libraryId.sqlIsNull())
-            throw "Запрос только для библиотекаря";
-        return bookInstance.libraryId == user.libraryId;
+        user.readRecord(userId, Field[]{ user.libraryId});
+        Application.logInfo(user.libraryId.get());
+        return bookInstance.libraryId == user.libraryId.get();
     }
 }

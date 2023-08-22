@@ -1,32 +1,25 @@
 import library.model.BookInstance;
 import library.model.Journal;
+import library.model.Book;
 import org.zenframework.z8.base.table.value.Field;
+import org.zenframework.z8.base.form.Listbox;
 
-
-[displayName "Экземпляры библиотеки"]
-public class BookInstances extends BookInstance
+[displayName "Экземпляры книг библиотеки"]
+public class LibraryInstances extends Book
 {
-    [displayName "Книга"] book.name;
-	[displayName "Номер"] number;
-	[displayName "Библиотека"] library.name;
-    
-    public BookInstance instance;
 
-    private Listbox booksList;
-    booksList.query = instance;
-    booksList.link = instance.bookId;
-    booksList.columns = { instance.number };
-    booksList.flex = 1;
-    
     names = { fullName };
-    controls = { book.name, library.name, number };
-    columns = { book.name, library.name, number };
 
-    virtual protected void onDestroyAction(guid recordId) {
-		super.onDestroyAction(recordId);
+	BookInstance instance;
 
-		Journal journal;
-		if (journal.readFirst(Field[] { journal.bookInstance.book.fullName }, journal.bookInstanceId == recordId))
-			throw "Невозможно удалить книгу " + journal.bookInstance.book.fullName.get() + ": журнал не пустой";
-	}
+	[displayName "Библиотека"] instance.library;
+	[displayName "Номер"] instance.number;
+
+	[displayName "Экземпляры"]
+	public Listbox instanceList;
+	instanceList.query = instance;
+	instanceList.link = instance.bookId;
+	instanceList.columns = { instance.library.name, instance.number };
+
+	controls = { instanceList };
 }

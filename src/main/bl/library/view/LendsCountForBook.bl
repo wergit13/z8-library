@@ -1,0 +1,18 @@
+import library.model.Author;
+import library.model.Book;
+import library.model.Journal;
+import org.zenframework.z8.base.form.Listbox;
+import org.zenframework.z8.base.form.action.Action;
+import org.zenframework.z8.base.query.Query;
+import org.zenframework.z8.base.table.value.IntExpression;
+
+[displayName "Популярность книг"]
+[presentation "table"]
+public class LendsCountForBook extends Book
+{
+    Journal journal;
+    [displayName "Книга(Автор)"] fullName;
+    [displayName "Коливечестово взятий"]
+    public IntExpression lendsCount = journal.count(recordId == journal.bookInstance.book && journal.status == Journal.Returned);
+    columns = { fullName, lendsCount };
+}

@@ -1,6 +1,5 @@
 import library.model.Journal;
 
-[entry]
 [displayName "Книги на руках и бронирования"]
 [presentation "table"]
 public class UserJournal extends Journal

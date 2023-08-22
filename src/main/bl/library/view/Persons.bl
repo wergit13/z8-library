@@ -5,6 +5,7 @@ import library.model.LibraryUser;
 import library.model.LibraryRoles;
 import library.runtime.Setup;
 import org.zenframework.z8.lang.Object;
+import org.zenframework.z8.base.table.value.Join;
 
 [displayName "Читатели"]
 class Persons extends LibraryUser {
@@ -14,9 +15,17 @@ class Persons extends LibraryUser {
 
     [displayName "Адрес"] address;
 	
-    virtual protected sql_bool where() {
-        UserRoles roles;
-		return roles.hasRecord(roles.role == LibraryRoles.Person && recordId == roles.user );
+	UserRoles roles;
+
+    public Join personJoin = class {
+        virtual protected sql_bool expression(){
+            return container.recordId == (sql_guid) container.roles.user && container.roles.role == LibraryRoles.Person; 
+        }
+    };
+    personJoin = roles;
+
+	virtual protected sql_bool where() {
+		return !roles.recordId.sqlIsNull();
 	}
 
 	controls = { name,

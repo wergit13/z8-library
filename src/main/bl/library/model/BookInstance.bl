@@ -2,6 +2,7 @@ import org.zenframework.z8.base.table.Table;
 import org.zenframework.z8.base.table.value.Link;
 import org.zenframework.z8.base.table.value.StringExpression;
 import org.zenframework.z8.base.table.value.IntField;
+import org.zenframework.z8.base.table.value.Field;
 
 [generatable]
 [name "BookInstance"]
@@ -18,5 +19,13 @@ public class BookInstance extends Table {
     public Link libraryId = library;
 
     public StringExpression fullName = book.name + " №";
+
+    virtual protected void onDestroyAction(guid recordId) {
+		super.onDestroyAction(recordId);
+
+		Journal journal;
+		if (journal.readFirst(Field[] { journal.bookInstance.book.fullName }, journal.bookInstanceId == recordId))
+			throw "Невозможно удалить книгу " + journal.bookInstance.book.fullName.get() + ": журнал не пустой";
+	}
 
 }

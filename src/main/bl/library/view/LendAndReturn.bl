@@ -14,7 +14,6 @@ public class LendAndReturn extends Persons
 	public LibraryJournal journal;
 
 
-
 	[displayName "Выдать книгу"]
 	public Action lendBook = class {
 		type = ActionType.Primary;
@@ -46,9 +45,8 @@ public class LendAndReturn extends Persons
 
 	colCount = 4;
 
-    names = { firstName, middleName, lastName };
-	controls = { name,  journalList };
-	columns = { name };
+    names = { name };
+	controls = {journalList };
 
 
 

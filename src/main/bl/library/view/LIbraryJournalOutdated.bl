@@ -2,7 +2,7 @@ import library.model.Journal;
 import library.model.LibraryUser;
 import org.zenframework.z8.base.table.value.Field;
 
-[displayName "Проскрочнный возврат"]
+[displayName "Просроченный возврат"]
 [presentation "table"]
 public class LibraryJournalOutdated extends LibraryJournal
 {

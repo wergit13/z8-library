@@ -21,6 +21,7 @@ public class Book extends Table {
 	[name "ISBN"]
 	public StringField isbn;
 
+	[displayName "Книга(Автор)"]
 	public StringExpression fullName = "«" + name + "» (" + author.name + ")";
 
 }

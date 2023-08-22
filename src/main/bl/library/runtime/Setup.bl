@@ -9,6 +9,7 @@ import org.zenframework.z8.base.table.system.UserEntries;
 import org.zenframework.z8.base.table.system.UserRoles;
 import org.zenframework.z8.base.table.value.Field;
 import org.zenframework.z8.lang.Object;
+import library.model.Author;
 
 /* Класс-помощник для настройки приложения */
 public class Setup {
@@ -24,6 +25,7 @@ public class Setup {
     private UserEntries userEntries;
     /* Системная таблица Z8, хранящая пункты меню приложения */
     private Entries entries;
+
 
     /* Массив приватных таблиц */
     public final Table[] privateTables = {};

@@ -9,13 +9,13 @@ import library.model.Journal;
 public class CheckBookingJob extends Executable {
 
 	virtual protected void execute(Parameter[] parameters) {
-		/*Journal journal;
+		Journal journal;
 		journal.read(Field[] { journal.bookInstance.book.name }, journal.status == Journal.Booked
-				&& journal.bookedAt < date.now().addMinute(-1));
+				&& journal.bookedAt < date.now().addDay(-2));
 		while (journal.next()) {
 			journal.destroy(journal.recordId());
 			Application.logInfo("Бронь на книгу " + journal.bookInstance.name.get() + " аннулирована");
-		}*/
+		}
 	}
 
 }

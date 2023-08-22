@@ -4,6 +4,7 @@ import library.model.Book;
 [displayName "Книги"]
 public class Books extends Book {
 
+    [displayName "Книга(Автор)"] fullName;
     [displayName "Наименование"] name;
 	[displayName "Описание"] description;
 	[displayName "Автор"] author.name;

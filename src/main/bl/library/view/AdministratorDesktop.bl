@@ -12,4 +12,8 @@ public class AdministratorDesktop extends Desktop {
 	public Persons persons;
 
     public Librarians librarians;
+
+	public LendsCountForBook lends;
+
+	public BookInstances instances;
 }

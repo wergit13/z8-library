@@ -7,4 +7,6 @@ public class LibrarianDesktop extends Desktop {
     public LendAndReturn lend;
 
     public LibraryJournalOutdated outdaters;
+
+    public LibraryJournal journal;
 }
